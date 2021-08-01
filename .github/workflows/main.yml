@@ -6,9 +6,9 @@ name: CD
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [main]
+    branches: [development]
   pull_request:
-    branches: [main]
+    branches: [development]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,17 +23,17 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # - uses: actions/checkout@v2
+      - name: Checkint out the code
+        uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: ssh connection
-        uses: appleboy/ssh-action@master
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          host: 18.222.136.254
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd github-actions-test
-            sudo git pull origin main
-            sudo git status
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Build application
+        run: yarn install && yarn build
+      - name: Deploy application
+        run: aws s3 sync ./build s3://${{ secrets.AWS_S3_BUCKET }} --delete
