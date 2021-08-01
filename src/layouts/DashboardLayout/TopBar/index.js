@@ -11,7 +11,6 @@ import {
   makeStyles,
   SvgIcon
 } from '@material-ui/core';
-import { Menu as MenuIcon } from 'react-feather';
 import Logo from 'src/components/Logo';
 import { THEMES } from 'src/constants';
 
