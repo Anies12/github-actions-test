@@ -35,5 +35,5 @@ jobs:
           port: 22
           script: |
             cd github-actions-test
-            git pull origin main
-            git status
+            sudo git pull origin main
+            sudo git status
