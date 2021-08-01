@@ -1,24 +1,16 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const router = require('./controllers');
-const response = require('./helpers/http');
-const { messages } = require('./helpers/constants');
-require('dotenv').config();
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+// import reportWebVitals from './reportWebVitals';
 
-const app = express();
-// TODO: specify allowed origins
-app.use(cors());
-app.use(express.json());
-app.use(cookieParser());
-app.use(router);
+ReactDOM.render(
+  <>
+    <App />
+  </>,
+  document.getElementById('root')
+);
 
-// handle 404 routes
-app.use((_req, res) => {
-  response.notFound(res, messages.general.notFound);
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
-});
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// reportWebVitals();
