@@ -9,7 +9,7 @@ const HomeView = () => {
   const classes = useStyles();
 
   return (
-    <>Hello</>
+    <>Hello!!</>
   );
 };
 
