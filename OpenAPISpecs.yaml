@@ -1,0 +1,1564 @@
+openapi: 3.0.0
+info:
+  title: GTH
+  contact:
+    email: contact@kiitos.tech
+  version: 1.0.0
+
+paths:
+  # -------------------------------------------------------------------------------------
+  /signup:
+    post:
+      tags:
+        - Account
+      description: Register new users to the system
+      requestBody:
+        description: Signup info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/signup'
+      responses:
+        201:
+          description: User created
+  # -------------------------------------------------------------------------------------
+  /candidates/{profile-id}:
+    get:
+      tags:
+        - Candidates-profile
+      description: Get full candidate profile, with experiences, skills... for the user profile page
+      parameters:
+        - name: profile-id
+          in: path
+          description: Candidate id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-candidate-profile'
+
+  # -------------------------------------------------------------------------------------
+  /candidates/{profile-id}/personal:
+    post:
+      tags:
+        - Candidates-profile/personal
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        create candidate personal info
+      requestBody:
+        description: Profile object to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-candidate'
+        required: true
+      responses:
+        200:
+          description: Profile created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-created'
+    get:
+      tags:
+        - Candidates-profile/personal
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        get candidate personal info.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-candidate'
+    put:
+      tags:
+        - Candidates-profile/personal
+      description: Update profile personal info
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      requestBody:
+        description: Profile object to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-candidate'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-updated'
+    delete:
+      tags:
+        - Candidates-profile/personal
+      description: Delete personal info in user profile
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-deleted'
+  # -------------------------------------------------------------------------------------
+  /candidates/{profile-id}/experiences:
+    post:
+      tags:
+        - Candidates-profile/experiences
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        Create an experience
+      requestBody:
+        description: Experience object to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-experience'
+        required: true
+      responses:
+        200:
+          description: Experience created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-created'
+    get:
+      tags:
+        - Candidates-profile/experiences
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        List all experiences.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-experience-list'
+  /candidates/{profile-id}/experiences/{experience-id}:
+    put:
+      tags:
+        - Candidates-profile/experiences
+      description: Update an experience
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: experience-id
+          in: path
+          description: Experience id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      requestBody:
+        description: Experience object to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-experience'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-updated'
+    delete:
+      tags:
+        - Candidates-profile/experiences
+      description: Delete an experience
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: experience-id
+          in: path
+          description: Experience id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-deleted'
+  # -------------------------------------------------------------------------------------
+  /candidates/{profile-id}/educations:
+    post:
+      tags:
+        - Candidates-profile/educations
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        Create an education
+      requestBody:
+        description: Education object to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-education'
+        required: true
+      responses:
+        200:
+          description: Education created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-created'
+    get:
+      tags:
+        - Candidates-profile/educations
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        List all educations.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-education-list'
+  /candidates/{profile-id}/educations/{education-id}:
+    put:
+      tags:
+        - Candidates-profile/educations
+      description: Update an education
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: education-id
+          in: path
+          description: Education id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      requestBody:
+        description: Education object to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-education'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-updated'
+    delete:
+      tags:
+        - Candidates-profile/educations
+      description: Delete an education
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: education-id
+          in: path
+          description: Education id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-deleted'
+  # -------------------------------------------------------------------------------------
+  /candidates/{profile-id}/skills:
+    post:
+      tags:
+        - Candidates-profile/skills
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        Create a skill
+      requestBody:
+        description: Skill object to create
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+        required: true
+      responses:
+        200:
+          description: Skill created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-created'
+    get:
+      tags:
+        - Candidates-profile/skills
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        List all skills.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-skill-list'
+  /candidates/{profile-id}/skills/{skill-id}:
+    delete:
+      tags:
+        - Candidates-profile/skills
+      description: Delete a skill
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: skill-id
+          in: path
+          description: Skill id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-deleted'
+  # -------------------------------------------------------------------------------------
+  /candidates/{profile-id}/languages:
+    post:
+      tags:
+        - Candidates-profile/languages
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        Create a language
+      requestBody:
+        description: Language object to create
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/request-language'
+        required: true
+      responses:
+        200:
+          description: Language created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-created'
+    get:
+      tags:
+        - Candidates-profile/languages
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        List all languages.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-language-list'
+  /candidates/{profile-id}/languages/{language-id}:
+    put:
+      tags:
+        - Candidates-profile/languages
+      description: Update an language
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: language-id
+          in: path
+          description: Language id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      requestBody:
+        description: Language object to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-language'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-updated'
+    delete:
+      tags:
+        - Candidates-profile/languages
+      description: Delete an language
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: language-id
+          in: path
+          description: Language id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-deleted'
+  # -------------------------------------------------------------------------------------
+  /candidates/{profile-id}/certificates:
+    post:
+      tags:
+        - Candidates-profile/certificates
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        Create a certificate
+      requestBody:
+        description: Certificate object to create
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/request-certificate'
+        required: true
+      responses:
+        200:
+          description: Certificate created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-created'
+    get:
+      tags:
+        - Candidates-profile/certificates
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      description: >-
+        List all certificates.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-certificate-list'
+  /candidates/{profile-id}/certificates/{certificate-id}:
+    put:
+      tags:
+        - Candidates-profile/certificates
+      description: Update an certificate
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: certificate-id
+          in: path
+          description: Certificate id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      requestBody:
+        description: Certificate object to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-certificate'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-updated'
+    delete:
+      tags:
+        - Candidates-profile/certificates
+      description: Delete an certificate
+      parameters:
+        - name: profile-id
+          in: path
+          description: Profile id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+        - name: certificate-id
+          in: path
+          description: Certificate id
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-deleted'
+
+  # -------------------------------------------------------------------------------------
+
+  # -------------------------------------------------------------------------------------
+
+  # -------------------------------------------------------------------------------------
+
+  # -------------------------------------------------------------------------------------
+
+  # -------------------------------------------------------------------------------------
+
+  /users:
+    get:
+      parameters:
+        - name: email
+          in: query
+          description: Check if user exists by searching email
+          required: false
+          schema:
+            type: string
+          example: email@example.com
+      tags:
+        - xx-Accounts
+      responses:
+        200:
+          $ref: '#/components/schemas/response-candidates-search'
+
+  /users/count:
+    post:
+      tags:
+        - xx-Accounts
+      description: >-
+        Get total count of candidates or employers or both. If you pass
+        [candidate] will count candidates only. If you pass [candidate,
+        employer] it will count both candidates and employers.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-users-count'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-users-count'
+  /admin/candidates:
+    get:
+      tags:
+        - xx-Admins
+      description: Search for all users by different criteria by the admin
+      parameters:
+        - name: email
+          in: query
+          description: Email address to filter on
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Name value to filter on
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-candidate'
+  /admin/employers:
+    get:
+      tags:
+        - xx-Admins
+      description: Search for all users by different criteria by the admin
+      parameters:
+        - name: email
+          in: query
+          description: Email address to filter on
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Name to filter on
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-employer'
+  /accounts/{accounts-id}/status:
+    post:
+      tags:
+        - XX-Account-settings
+      description: Activate / deactivate employer account
+      parameters:
+        - name: accounts-id
+          in: path
+          description: Account id of user that needs to be activate / deactivate
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/request-users-activation'
+      responses:
+        200:
+          description: Account status updated
+  /accounts/{account-id}:
+    put:
+      tags:
+        - XX-Account-settings
+      parameters:
+        - name: account-id
+          in: path
+          description: Account id
+          required: true
+          schema:
+            type: number
+      description: Edit account information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users'
+      responses:
+        201:
+          description: Updated Successfully
+  /accounts/{account-id}/status:
+    post:
+      tags:
+        - XX-Account-settings
+      parameters:
+        - name: account-id
+          in: path
+          description: Account id
+          required: true
+          schema:
+            type: number
+      description: Activate / Deactivate employer account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users'
+      responses:
+        201:
+          description: Updated Successfully
+  /candidates/search:
+    get:
+      tags:
+        - XX-Search
+      description: >-
+        for the main search bar where employers search and filter candidates
+        by different criteria
+      parameters:
+        - name: first-name
+          in: query
+          description: Candidate first name
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: last-name
+          in: query
+          description: Candidate last name
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: title
+          in: query
+          description: Candidate job title
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: skill-tag
+          in: query
+          description: Skill tag
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response-candidates-search'
+  /signup-requests:
+    get:
+      tags:
+        - XX-Signup-requests
+      description: Return ALL messages requests from Employers to the Admin
+      responses:
+        200:
+          description: Messages Returned Successfully
+    post:
+      tags:
+        - XX-Signup-requests
+      description: Employer sends SignUp Request to the Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employer-signup-request'
+      responses:
+        201:
+          description: Request Submitted Successfully
+  /signup-requests/signup-requests-id/decide:
+    post:
+      tags:
+        - XX-Signup-requests
+      description: For admin to approve or reject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employer-signup-request'
+      responses:
+        201:
+          description: Request Submitted Successfully
+  /employers:
+    get:
+      tags:
+        - XX-Employers
+      description: List all employers
+      responses:
+        200:
+          description: Data Returned Successfully
+    post:
+      tags:
+        - XX-Employers
+      description: Create profile for employer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employers-profile'
+      responses:
+        201:
+          description: Profile Created Successfully
+  /employers/profile-id:
+    get:
+      tags:
+        - XX-Employers
+      description: Return Employer profile data
+      responses:
+        200:
+          description: Data Returned Successfully
+    put:
+      tags:
+        - XX-Employers
+      description: Edit Employer profile data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employers-profile'
+      responses:
+        201:
+          description: Updated Successfully
+    delete:
+      tags:
+        - XX-Employers
+      description: Delete employer profile
+      responses:
+        202:
+          description: Deleted Successfully
+
+# -------------------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------------------
+components:
+  schemas:
+    signup:
+      required:
+        - email-address
+        - first-name
+        - last-name
+        - password
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Alaa
+        lastName:
+          type: string
+          example: Shurrab
+        password:
+          type: string
+          example: password
+        emailAddress:
+          type: string
+          example: email@kiitos-tech.com
+    response-full-profile:
+      type: object
+      properties:
+        personal-info:
+          $ref: '#/components/schemas/request-candidate'
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/request-education'
+        experience:
+          type: array
+          items:
+            $ref: '#/components/schemas/request-experience'
+        certificate:
+          type: array
+          items:
+            $ref: '#/components/schemas/request-certificate'
+        skill:
+          type: array
+          items:
+            $ref: '#/components/schemas/request-skill'
+        languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/request-language'
+        cv:
+          type: string
+    request-candidate:
+      required:
+        - city
+        - country
+        - date-of-birth
+        - first-name
+        - gender
+        - job-title
+        - last-name
+        - profile-picture
+      type: object
+      properties:
+        first-name:
+          type: string
+          example: john
+        last-name:
+          type: string
+          example: doe
+        job-title:
+          type: string
+          example: back-end developer
+        city:
+          type: string
+          example: Jerusalem
+        country:
+          type: string
+          example: Palestine
+        gender:
+          type: string
+          example: male
+        profile-picture:
+          type: string
+          example: https://www.website.com/profile/8VZTPgA9.png
+        date-of-birth:
+          type: string
+          format: date-time
+    request-education:
+      required:
+        - degree-level
+        - end-date
+        - field-of-study
+        - start-date
+        - university
+      type: object
+      properties:
+        university:
+          type: string
+          example: An-Najah
+        degree-level:
+          type: string
+          example: bachelors
+        field-of-study:
+          type: string
+          example: computer science
+        start-date:
+          type: string
+          format: date-time
+        end-date:
+          type: string
+          format: date-time
+    request-experience:
+      required:
+        - city
+        - company-title
+        - country
+        - end-date
+        - job-title
+        - start-date
+      type: object
+      properties:
+        job-title:
+          type: string
+          example: back-end developer
+        company-title:
+          type: string
+          example: kiitos
+        country:
+          type: string
+          example: Holland
+        city:
+          type: string
+          example: Amsterdam
+        description:
+          type: string
+          example: >-
+            responsible for creating and maintaining technology at the back
+            end of kiitos website
+        start-date:
+          type: string
+          format: date-time
+        end-date:
+          type: string
+          format: date-time
+    request-certificate:
+      required:
+        - Candidates-title
+        - credential-id
+        - issue-date
+        - issuing-organization
+      type: object
+      properties:
+        certificate-title:
+          type: string
+          example: bachelors of computer science
+        issuing-organization:
+          type: string
+          example: An-Najah National University
+        credential-id:
+          type: string
+          example: EMC-00245-NE
+        issue-date:
+          type: string
+          format: date-time
+    request-skill:
+      required:
+        - id
+        - title
+      type: object
+      properties:
+        id:
+          type: number
+          example: 342
+        title:
+          type: string
+          example: react js
+    request-language:
+      required:
+        - id
+        - title
+        - proficieny-level
+      type: object
+      properties:
+        id:
+          type: number
+          example: 342
+        title:
+          type: string
+          example: English
+        proficieny-level:
+          type: number
+          example: 1
+    request-cv:
+      required:
+        - file
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+    response-candidate-list:
+      type: array
+      items:
+        $ref: '#/components/schemas/request-candidate'
+    response-education-list:
+      type: array
+      items:
+        $ref: '#/components/schemas/request-education'
+    response-experience-list:
+      type: array
+      items:
+        $ref: '#/components/schemas/request-experience'
+    response-certificate-list:
+      type: array
+      items:
+        $ref: '#/components/schemas/request-certificate'
+    response-skill-list:
+      type: array
+      items:
+        $ref: '#/components/schemas/request-skill'
+    response-language-list:
+      type: array
+      items:
+        $ref: '#/components/schemas/request-language'
+    response-created:
+      type: object
+      properties:
+        message:
+          type: string
+          example: created successfully
+        id:
+          type: integer
+          format: int32
+          example: 120
+    response-deleted:
+      type: object
+      properties:
+        message:
+          type: string
+          example: deleted successfully
+    response-updated:
+      type: object
+      properties:
+        message:
+          type: string
+          example: updated successfully
+    request-users-activation:
+      required:
+        - is-active
+      type: object
+      properties:
+        is-active:
+          type: boolean
+    response-candidate:
+      required:
+        - email
+        - first-name
+        - id
+        - is-active
+        - job-title
+        - last-mame
+        - user-id
+      type: object
+      properties:
+        id:
+          type: integer
+        user-id:
+          type: integer
+        first-name:
+          type: string
+          example: john
+        last-name:
+          type: string
+          example: doe
+        email:
+          type: string
+          example: email@kiitos-tech.com
+        job-title:
+          type: string
+          example: frontend developer
+        is-active:
+          type: boolean
+    request-users-count:
+      required:
+        - user-types
+      type: object
+      properties:
+        user-types:
+          type: array
+          example: [candidate, employer]
+          items:
+            type: string
+    response-users-count:
+      required:
+        - total-count
+      type: object
+      properties:
+        total-count:
+          type: integer
+    response-candidates-search:
+      required:
+        - headline
+        - name
+        - Candidates
+        - title
+      type: array
+      items:
+        $ref: '#/components/schemas/responsecandidatessearch_inner'
+    response-candidate-profile:
+      required:
+        - education
+        - Candidates
+        - info
+      type: object
+      properties:
+        info:
+          $ref: '#/components/schemas/responsecandidateprofile_info'
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/responsecandidateprofile_education'
+        experience:
+          type: array
+          items:
+            $ref: '#/components/schemas/responsecandidateprofile_experience'
+    responsecandidatessearch_inner:
+      properties:
+        name:
+          type: string
+          example: Iman Sedky
+        headline:
+          type: string
+          example: front-end intern at kiitos
+        skills:
+          type: array
+          example: [front-end development, team work]
+          items:
+            type: string
+        title:
+          type: string
+          example: Frontend Developer
+    responsecandidateprofile_info:
+      properties:
+        name:
+          type: string
+          example: iman sedky
+        headline:
+          type: string
+          example: front-end intern at kiitos
+        skills:
+          type: array
+          items:
+            type: string
+            example: [front-end development, team work]
+        title:
+          type: string
+          example: Frontend Developer
+        date-of-birth:
+          type: string
+          example: 29/10/1996
+        gender:
+          type: string
+          example: female
+        mobile:
+          type: string
+          example: 05999999999
+        profile-picture:
+          type: string
+          example: Iman.png
+        cv:
+          type: string
+          example: cv-url
+        about:
+          type: string
+          example: frontend developer graduated from code academy program ..
+        years-of-experience:
+          type: string
+          example: 1
+    responsecandidateprofile_education:
+      properties:
+        university:
+          type: string
+          example: azhar university
+        degree:
+          type: string
+          example: bachelor degree
+        field-of-study:
+          type: string
+          example: medical devices engineering
+        grade:
+          type: string
+          example: 84%
+        start-date:
+          type: string
+          example: 20/2/2015
+        end-date:
+          type: string
+          example: 20/2/2020
+    responsecandidateprofile_experience:
+      properties:
+        job-title:
+          type: string
+          example: Frontend intern
+        company-name:
+          type: string
+          example: kiitos technologies
+        job-location:
+          type: string
+          example: Nablus
+        job-start-date:
+          type: string
+          example: 20/2/2021
+        job-description:
+          type: string
+          example: >-
+            Determining the structure and design of web pages. Ensuring user
+            experience determines design choices. Developing features to
+            enhance the user experience.
+            employer-signup-request:
+    employer-signup-request:
+      required:
+        - employer-signup-request-id
+        - id
+        - user-id
+      type: object
+      properties:
+        id:
+          type: integer
+          format: uuid
+          example: 70174840851
+        user-id:
+          type: integer
+          example: 39399391197
+        first-name:
+          type: string
+          example: Ali
+        last-name:
+          type: string
+          example: Ali
+        company-title:
+          type: string
+          example: Kiitos Technologies
+        location-country:
+          type: string
+          example: Palestine
+        location-city:
+          type: string
+          example: Nablus
+        location-zip-code:
+          type: string
+          example: P4030230
+        location-street:
+          type: string
+          example: Omar bin Al-Khattab street
+        location-address:
+          type: string
+          example: 201 Masri Building
+        message:
+          type: string
+        is-approved:
+          type: boolean
+          example: true
+        created-at:
+          type: string
+          format: date-time
+        updated-at:
+          type: string
+          format: date-time
+    users:
+      required:
+        - email
+        - id
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        password:
+          type: string
+        is-active:
+          type: boolean
+        reset-password-token:
+          type: string
+        reset-password-sent-at:
+          type: string
+          format: date-time
+        created-at:
+          type: string
+          format: date-time
+        updated-at:
+          type: string
+          format: date-time
+    employers-profile:
+      required:
+        - employer-signup-request-id
+        - id
+        - user-id
+      type: object
+      properties:
+        id:
+          type: integer
+          format: uuid
+          example: 70174840851
+        user-id:
+          type: integer
+          example: 39399391197
+        employer-signup-request-id:
+          type: integer
+          example: 15662625551
+        first-name:
+          type: string
+          example: Ali
+        last-name:
+          type: string
+          example: Ali
+        company-title:
+          type: string
+          example: Kiitos Technologies
+        location-country:
+          type: string
+          example: Palestine
+        location-city:
+          type: string
+          example: Nablus
+        location-zip-code:
+          type: string
+          example: P4030230
+        location-street:
+          type: string
+          example: Omar bin Al-Khattab street
+        location-address:
+          type: string
+          example: 201 Masri Building
+        message:
+          type: string
+        created-at:
+          type: string
+          format: date-time
+        updated-at:
+          type: string
+          format: date-time
+    response-employer:
+      required:
+        - company-title
+        - email
+        - first-name
+        - id
+        - is-active
+        - last-mame
+        - user-id
+      type: object
+      properties:
+        id:
+          type: integer
+        user-id:
+          type: integer
+        first-name:
+          type: string
+          example: john
+        last-name:
+          type: string
+          example: doe
+        email:
+          type: string
+          example: email@kiitos-tech.com
+        company-title:
+          type: string
+          example: kiitos
+        is-active:
+          type: boolean
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Mahmoudz/GTH/1.0.0
